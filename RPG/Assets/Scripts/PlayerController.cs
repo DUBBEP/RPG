@@ -97,7 +97,14 @@ public class PlayerController : MonoBehaviourPun
         }
 
         // play the attack animation
-        weaponAnim.SetTrigger("Attack");
+        photonView.RPC("PlayAttackAnimation", RpcTarget.All, id);
+    }
+
+    [PunRPC]
+    void PlayAttackAnimation(int id)
+    {
+        PlayerController player = GameManager.instance.GetPlayer(id);
+        player.weaponAnim.SetTrigger("Attack");
     }
 
     [PunRPC]
